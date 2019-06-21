@@ -78,3 +78,11 @@ function main() {
 }
 
 main();
+
+function restart() {
+    userScore = 0;
+    computerScore = 0;
+    userScore_span.innerHTML = userScore;
+    computerScore_span.innerHTML = computerScore;
+    result_p.innerHTML = "Game Restarted!";
+}
