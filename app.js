@@ -92,6 +92,7 @@ function restart() {
     total_games = 0;
     userScore_span.innerHTML = userScore;
     computerScore_span.innerHTML = computerScore;
+    tracker_container.innerHTML = ''
     result_p.innerHTML = "Game Restarted!";
 }
 
