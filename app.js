@@ -1,23 +1,25 @@
 let userScore = 0;
 let computerScore = 0;
+let total_games = 0;
 const userScore_span = document.getElementById("user-score");
 const computerScore_span = document.getElementById("computer-score");
-const scoreBoard_div =document.querySelector(".score-board");
+const scoreBoard_div = document.querySelector(".score-board");
 const result_p = document.querySelector(".result > p");
 const rock_div = document.getElementById('r');
 const paper_div = document.getElementById('p');
 const scissors_div = document.getElementById('s');
+const tracker_container = document.getElementById('tracker-container');
 
-function getComputerChoice () {
+function getComputerChoice() {
     const choices = ['r', 'p', 's'];
     const randomNumber = Math.floor((Math.random() * 3));
     return choices[randomNumber];
 }
 
 function convertToWord(letter) {
-    if (letter == "r") return "Rock";
-    if (letter == "p") return "Paper";
-    return "Scissors";
+    if (letter == "r") return "rock";
+    if (letter == "p") return "paper";
+    return "scissors";
 }
 
 
@@ -51,23 +53,28 @@ function draw(userChoice, computerChoice) {
 
 function game(userChoice) {
     const computerChoice = getComputerChoice();
-    switch (userChoice + computerChoice){
+    total_games++
+    switch (userChoice + computerChoice) {
         case "rs":
         case "pr":
         case "sp":
-            win(userChoice, computerChoice); 
+            win(userChoice, computerChoice);
+            results(userChoice, computerChoice, total_games, 'win');
             break;
         case "rp":
         case "ps":
         case "sr":
             lose(userChoice, computerChoice);
+            results(userChoice, computerChoice, total_games, 'lose');
             break;
         case "rr":
         case "pp":
         case "ss":
             draw(userChoice, computerChoice);
+            results(userChoice, computerChoice, total_games, 'draw')
             break;
     }
+
 }
 
 
@@ -82,7 +89,63 @@ main();
 function restart() {
     userScore = 0;
     computerScore = 0;
+    total_games = 0;
     userScore_span.innerHTML = userScore;
     computerScore_span.innerHTML = computerScore;
     result_p.innerHTML = "Game Restarted!";
+}
+
+
+function results(userChoice, computerChoice, total_games, outcome) {
+    const result = document.createElement('div')
+    const totalGames = document.createElement('span')
+    const outcomeMsg = document.createElement('span')
+    const userPick = document.createElement('img')
+    const compPick = document.createElement('img')
+    const divClass = document.createAttribute('class')
+    const totalGamesClass = document.createAttribute('class')
+    const outcomeMsgClass = document.createAttribute('class')
+    const outcomeMsgStyle = document.createAttribute('style')
+    const userImgSrc = document.createAttribute('src')
+    const compImgSrc = document.createAttribute('src')
+
+    // create result div
+    divClass.value = 'result'
+    result.setAttributeNode(divClass)
+
+    // adding total game number
+    totalGamesClass.value = 'action-message'
+    totalGames.setAttributeNode(totalGamesClass)
+    totalGames.innerHTML = total_games
+    result.appendChild(totalGames)
+
+    // adding user's choice picture
+    userImgSrc.value = `images/${convertToWord(userChoice)}.png`
+    userPick.setAttributeNode(userImgSrc)
+    result.appendChild(userPick)
+
+    // adding result msg
+    outcomeMsgClass.value = 'action-message'
+    switch (outcome) {
+        case 'win':
+            outcomeMsgStyle.value = 'color: green;';
+            break;
+        case 'lose':
+            outcomeMsgStyle.value = 'color: red;';
+            break;
+        case 'draw':
+            outcomeMsgStyle.value = 'color: white;';
+            break;
+    }
+    outcomeMsg.setAttributeNode(outcomeMsgClass)
+    outcomeMsg.setAttributeNode(outcomeMsgStyle)
+    outcomeMsg.innerHTML = outcome
+    result.appendChild(outcomeMsg)
+
+    // adding comp's choice pic
+    compImgSrc.value = `images/${convertToWord(computerChoice)}.png`
+    compPick.setAttributeNode(compImgSrc)
+    result.appendChild(compPick)
+
+    tracker_container.prepend(result)
 }

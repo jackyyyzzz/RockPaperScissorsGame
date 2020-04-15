@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="./style.css">
     <title>Rock Paper Scissors Game</title>
 </head>
+
 <body>
     <header>
         <h1>Rock Paper Scissors</h1>
@@ -24,20 +26,29 @@
 
     <div class="choices">
         <div class="choice" id="r">
-            <img src="images/rock.png" alt="" height="50" width="50">
+            <img src="images/rock.png" alt="">
         </div>
         <div class="choice" id="p">
-            <img src="images/paper.png" alt="" height="50" width="50">
+            <img src="images/paper.png" alt="">
         </div>
         <div class="choice" id="s">
-            <img src="images/scissors.png" alt="" height="50" width="50">
+            <img src="images/scissors.png" alt="">
         </div>
     </div>
 
-    <p id="action-message">Make your move</p>
+    <p class="action-message">Make your move</p>
 
     <button id="restart-btn" type="button" onclick="restart()">Restart Game</button>
 
+    <p class="action-message">Score Board</p>
+
+    <div class="game-tracker">
+        <div id="tracker-container">
+
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
+
 </html>
